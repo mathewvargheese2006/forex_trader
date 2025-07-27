@@ -812,3 +812,4 @@
 
 2025-07-27 15:39:03,207 - INFO - Analyzing USDCHF: Price 1.00029, Action: HOLD, Confidence: 0.00
 2025-07-27 15:39:05,211 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 1, Daily Loss: $0.00
+2025-07-27 15:39:37,221 - INFO - Received signal 2, shutting down gracefully...
