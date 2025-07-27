@@ -1,7 +1,7 @@
 {
-  "mt5_server": "your-mt5-server",
-  "mt5_login": "your-login",
-  "mt5_password": "your-password",
+  "mt5_server": "MetaQuotes-Demo",
+  "mt5_login": "94946431",
+  "mt5_password": "6-OuSpJy",
   "gemini_api_key": "AIzaSyAYLtic94eXOIrQRaS1ojw626adcvOKNcU",
   "account_balance": 200000.0,
   "forex_pairs": [
