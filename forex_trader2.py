@@ -93,9 +93,10 @@ class ForexAITrader:
         self.strategies: Dict[str, Strategy] = {}
         
         # API limits and usage tracking
-        self.gemini_requests_today = 0
-        self.gemini_daily_limit = 1500  # Gemini free tier limit
+        self.gemini_requests_today = {}  # Track requests per API key
+        self.gemini_daily_limit = 1500  # Gemini free tier limit per key
         self.last_api_reset = datetime.now().date()
+        self.current_api_key_index = 0  # Track which API key we're using
         
         # Communication queues
         self.chat_queue = queue.Queue()
@@ -122,7 +123,7 @@ class ForexAITrader:
                 "mt5_server": "your-mt5-server",
                 "mt5_login": "your-login",
                 "mt5_password": "your-password",
-                "gemini_api_key": "your-gemini-api-key",
+                "gemini_api_keys": ["your-gemini-api-key"],
                 "account_balance": 200000.0,
                 "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"],
                 "min_win_rate_threshold": 0.6,
@@ -260,27 +261,76 @@ class ForexAITrader:
             self.strategies[strategy.name] = strategy
             self.save_strategy(strategy)
 
-    async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
-        """Call Gemini API with rate limiting and error handling"""
-        if self.gemini_requests_today >= self.gemini_daily_limit:
-            logger.warning("Gemini API daily limit reached")
+    def get_next_available_api_key(self):
+        """Get the next available API key in rotation, excluding those at limit"""
+        api_keys = self.config.get('gemini_api_keys', [])
+        if not api_keys or api_keys == ['your-gemini-api-key']:
             return None
         
-        # Reset daily counter if new day
+        # Reset daily counters if new day
         if datetime.now().date() > self.last_api_reset:
-            self.gemini_requests_today = 0
+            self.gemini_requests_today = {}
             self.last_api_reset = datetime.now().date()
+            self.current_api_key_index = 0
         
-        # Check if API key is configured
-        if self.config.get('gemini_api_key') == 'your-gemini-api-key':
-            logger.warning("Gemini API key not configured - using mock response")
+        # Find available keys (not at limit)
+        available_keys = []
+        for i, key in enumerate(api_keys):
+            usage = self.gemini_requests_today.get(key, 0)
+            if usage < self.gemini_daily_limit:
+                available_keys.append((i, key))
+        
+        if not available_keys:
+            logger.warning("All Gemini API keys have reached daily limit")
+            # Log status of all keys
+            for i, key in enumerate(api_keys):
+                usage = self.gemini_requests_today.get(key, 0)
+                logger.info(f"  API Key #{i+1} (...{key[-4:]}): {usage}/{self.gemini_daily_limit} requests")
+            return None
+        
+        # Always rotate to next available key in sequence
+        # Find current position among available keys
+        current_position = 0
+        for i, (key_index, key) in enumerate(available_keys):
+            if key_index == self.current_api_key_index:
+                current_position = i
+                break
+        
+        # Move to next available key (round-robin)
+        next_position = (current_position + 1) % len(available_keys)
+        next_available = available_keys[next_position]
+        
+        old_index = self.current_api_key_index
+        self.current_api_key_index = next_available[0]
+        
+        # Log key rotation
+        if len(available_keys) > 1:  # Only log if there are multiple keys
+            logger.info(f"Rotating to API Key #{self.current_api_key_index + 1} (...{next_available[1][-4:]}) - Available: {len(available_keys)}/{len(api_keys)} keys")
+        
+        return next_available[1]
+
+    async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
+        """Call Gemini API with alternating key rotation and automatic exclusion"""
+        api_key = self.get_next_available_api_key()
+        
+        if not api_key:
+            logger.warning("No Gemini API keys available or all limits reached - using mock response")
             return self.generate_mock_response(prompt)
         
         for attempt in range(max_retries):
             try:
-                response = await self.make_api_request(prompt)
+                response = await self.make_api_request(prompt, api_key)
                 if response:
-                    self.gemini_requests_today += 1
+                    # Track usage for this specific key
+                    if api_key not in self.gemini_requests_today:
+                        self.gemini_requests_today[api_key] = 0
+                    self.gemini_requests_today[api_key] += 1
+                    
+                    # Log which API key was used
+                    api_keys = self.config.get('gemini_api_keys', [])
+                    key_number = self.current_api_key_index + 1
+                    logger.debug(f"Used Gemini API Key #{key_number} (...{api_key[-4:]}) - Usage: {self.gemini_requests_today[api_key]}/{self.gemini_daily_limit}")
+                    
                     return response
                     
             except Exception as e:
@@ -305,10 +355,9 @@ class ForexAITrader:
             })
         return "Mock response - Gemini API not configured"
 
-    async def make_api_request(self, prompt: str) -> Optional[str]:
+    async def make_api_request(self, prompt: str, api_key: str) -> Optional[str]:
         """Make API request to Gemini for analysis"""
         try:
-            api_key = self.config['gemini_api_key']
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={api_key}"
             
             headers = {
@@ -838,9 +887,10 @@ class ForexAITrader:
                         # AI analysis
                         analysis = await self.analyze_market_with_ai(pair, df)
                         
-                        # Log current activity
-                        current_price = df.iloc[-1]['close']
-                        logger.info(f"Analyzing {pair}: Price {current_price:.5f}, Action: {analysis.get('action', 'HOLD')}, Confidence: {analysis.get('confidence', 0):.2f}")
+                                        # Log current activity with API key info
+                current_price = df.iloc[-1]['close']
+                api_key_info = f"[API Key #{self.current_api_key_index + 1}]" if self.config.get('gemini_api_keys') else "[Mock AI]"
+                logger.info(f"{api_key_info} Analyzing {pair}: Price {current_price:.5f}, Action: {analysis.get('action', 'HOLD')}, Confidence: {analysis.get('confidence', 0):.2f}")
                         
                         # Execute paper trade if conditions are met
                         if analysis['action'] != 'HOLD':
@@ -998,9 +1048,22 @@ class ForexAITrader:
                 - Win Rate: {stats.get('win_rate', 0)}%
                 - Total Profit: ${stats.get('total_profit', 0):.2f}
                 - Daily Loss: ${stats.get('daily_loss', 0):.2f} / ${stats.get('daily_limit', 0):.2f}
-                - API Calls Today: {self.gemini_requests_today} / {self.gemini_daily_limit}
-                - Account Balance: ${stats.get('account_balance', 0):.2f}
-                """
+                - API Calls Today: {sum(self.gemini_requests_today.values())} total"""
+                
+                # Show status for each API key
+                api_keys = self.config.get('gemini_api_keys', [])
+                available_count = 0
+                for i, key in enumerate(api_keys):
+                    usage = self.gemini_requests_today.get(key, 0)
+                    status = "ACTIVE" if i == self.current_api_key_index else "READY"
+                    if usage >= self.gemini_daily_limit:
+                        status = "EXCLUDED"
+                    else:
+                        available_count += 1
+                    status_msg += f"\n                - API Key #{i+1} (...{key[-4:]}): {usage}/{self.gemini_daily_limit} [{status}]"
+                
+                status_msg += f"\n                - Available Keys: {available_count}/{len(api_keys)}"
+                status_msg += f"\n                - Account Balance: ${stats.get('account_balance', 0):.2f}"
                 logger.info(status_msg)
                 
             elif command == 'stats':
@@ -1220,6 +1283,15 @@ class ForexAITrader:
             logger.info(f"Account Balance: ${self.account_balance:,.2f}")
             logger.info(f"Daily Loss Limit: ${self.daily_loss_limit:,.2f}")
             logger.info(f"Monitoring pairs: {', '.join(self.config['forex_pairs'])}")
+        
+        # Log API key status
+        api_keys = self.config.get('gemini_api_keys', [])
+        if api_keys and api_keys != ['your-gemini-api-key']:
+            logger.info(f"Gemini API Keys configured: {len(api_keys)} keys available")
+            for i, key in enumerate(api_keys):
+                logger.info(f"  API Key #{i+1}: ...{key[-4:]} (Limit: {self.gemini_daily_limit}/day)")
+        else:
+            logger.info("No Gemini API keys configured - using mock AI responses")
             
             # Create tasks for concurrent execution
             tasks = [
@@ -1285,7 +1357,7 @@ if __name__ == "__main__":
             "mt5_server": "your-mt5-server",
             "mt5_login": "your-login", 
             "mt5_password": "your-password",
-            "gemini_api_key": "your-gemini-api-key",
+            "gemini_api_keys": ["your-gemini-api-key"],
             "account_balance": 200000.0,
             "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "NZDUSD", "USDCHF"],
             "min_win_rate_threshold": 0.6,

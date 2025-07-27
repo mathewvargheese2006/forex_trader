@@ -115,3 +115,703 @@
 2025-07-27 12:56:02,634 - ERROR - Error analyzing USDCHF: Object of type Timestamp is not JSON serializable
 2025-07-27 12:56:02,634 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 4, Daily Loss: $0.00
 2025-07-27 12:56:04,920 - INFO - Received signal 15, shutting down gracefully...
+2025-07-27 13:11:02,737 - INFO - Cleaning up resources...
+2025-07-27 13:11:02,738 - INFO - Cleanup completed
+2025-07-27 15:38:46,470 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 15:38:46,472 - INFO - Local storage directories initialized successfully
+2025-07-27 15:38:46,472 - WARNING - MetaTrader 5 not available - using demo mode only
+2025-07-27 15:38:46,473 - INFO - 🚀 AI Forex Trading System Starting...
+2025-07-27 15:38:46,473 - INFO - Account Balance: $200,000.00
+2025-07-27 15:38:46,473 - INFO - Daily Loss Limit: $10,000.00
+2025-07-27 15:38:46,473 - INFO - Monitoring pairs: EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, NZDUSD, USDCHF
+2025-07-27 15:38:46,473 - INFO - Starting continuous learning loop...
+2025-07-27 15:38:46,473 - INFO - Daily loss counter reset
+2025-07-27 15:38:46,473 - WARNING - Failed to get real rates for EURUSD, using demo data
+2025-07-27 15:38:46,481 - INFO - Chat interface started. Type 'help' for commands.
+2025-07-27 15:38:48,740 - INFO - Analyzing EURUSD: Price 1.00101, Action: BUY, Confidence: 0.60
+2025-07-27 15:38:48,750 - INFO - PAPER TRADE EXECUTED: BUY 64.52 lots of EURUSD at 1.00101
+2025-07-27 15:38:48,750 - INFO - Reasoning: The EURUSD is currently trading below its 20 and 50-period moving averages, suggesting a bearish trend. However, the RSI is at 31.96, indicating the pair is oversold and potentially nearing a bounce. The MACD is slightly negative but showing signs of a potential bullish crossover.  The recent price action shows some volatility, with a slight upward trend in the last candle. The price is also close to the lower Bollinger Band, suggesting potential support.  Given the oversold conditions and proximity to support, a long position with a tight stop-loss is considered. The risk/reward ratio is favorable given the relatively small stop-loss and larger potential profit target.
+2025-07-27 15:38:48,751 - ERROR - Error analyzing EURUSD: Object of type Timestamp is not JSON serializable
+2025-07-27 15:38:48,751 - WARNING - Failed to get real rates for GBPUSD, using demo data
+2025-07-27 15:38:49,049 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "10s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:49,189 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "10s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:49,509 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "10s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:49,510 - INFO - Analyzing GBPUSD: Price 0.99915, Action: HOLD, Confidence: 0.00
+2025-07-27 15:38:51,510 - WARNING - Failed to get real rates for USDJPY, using demo data
+2025-07-27 15:38:51,797 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "8s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:51,935 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "8s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:52,244 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "7s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:52,244 - INFO - Analyzing USDJPY: Price 1.00018, Action: HOLD, Confidence: 0.00
+2025-07-27 15:38:54,246 - WARNING - Failed to get real rates for AUDUSD, using demo data
+2025-07-27 15:38:54,389 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "5s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:54,535 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "5s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:54,829 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "5s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:54,829 - INFO - Analyzing AUDUSD: Price 1.00004, Action: HOLD, Confidence: 0.00
+2025-07-27 15:38:56,830 - WARNING - Failed to get real rates for USDCAD, using demo data
+2025-07-27 15:38:56,976 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "3s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:57,286 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "2s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:57,576 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "2s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:38:57,576 - INFO - Analyzing USDCAD: Price 0.99982, Action: HOLD, Confidence: 0.00
+2025-07-27 15:38:59,577 - WARNING - Failed to get real rates for NZDUSD, using demo data
+2025-07-27 15:38:59,876 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "0s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:00,014 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "0s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:00,294 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "59s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:00,294 - INFO - Analyzing NZDUSD: Price 1.00087, Action: HOLD, Confidence: 0.00
+2025-07-27 15:39:01,128 - INFO - Received signal 15, shutting down gracefully...
+2025-07-27 15:39:02,295 - WARNING - Failed to get real rates for USDCHF, using demo data
+2025-07-27 15:39:02,609 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "57s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:02,918 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "57s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:03,206 - ERROR - Gemini API request failed: 429 - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-flash",
+              "location": "global"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "56s"
+      }
+    ]
+  }
+}
+
+2025-07-27 15:39:03,207 - INFO - Analyzing USDCHF: Price 1.00029, Action: HOLD, Confidence: 0.00
+2025-07-27 15:39:05,211 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 1, Daily Loss: $0.00
+2025-07-27 15:39:37,221 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 15:47:26,338 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 15:51:41,973 - INFO - Received signal 2, shutting down gracefully...
