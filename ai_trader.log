@@ -1,0 +1,34 @@
+2025-07-27 10:20:28,741 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 10:20:41,897 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 10:20:41,916 - INFO - Local storage directories initialized successfully
+2025-07-27 10:20:41,916 - WARNING - MetaTrader 5 not available - using demo mode only
+2025-07-27 10:20:41,936 - INFO - 🚀 AI Forex Trading System Starting...
+2025-07-27 10:20:41,936 - INFO - Account Balance: $200,000.00
+2025-07-27 10:20:41,936 - INFO - Daily Loss Limit: $10,000.00
+2025-07-27 10:20:41,936 - INFO - Monitoring pairs: EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, NZDUSD, USDCHF
+2025-07-27 10:20:41,936 - INFO - Starting continuous learning loop...
+2025-07-27 10:20:41,936 - INFO - Daily loss counter reset
+2025-07-27 10:20:41,943 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:41,943 - INFO - Analyzing EURUSD: Price 0.99892, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:41,943 - INFO - Chat interface started. Type 'help' for commands.
+2025-07-27 10:20:43,950 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:43,950 - INFO - Analyzing GBPUSD: Price 0.99882, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:45,957 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:45,957 - INFO - Analyzing USDJPY: Price 1.00099, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:47,963 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:47,964 - INFO - Analyzing AUDUSD: Price 1.00051, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:49,970 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:49,970 - INFO - Analyzing USDCAD: Price 0.99983, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:51,977 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:51,977 - INFO - Analyzing NZDUSD: Price 1.00005, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:53,983 - WARNING - Claude API key not configured - using mock response
+2025-07-27 10:20:53,983 - INFO - Analyzing USDCHF: Price 1.00195, Action: HOLD, Confidence: 0.50
+2025-07-27 10:20:55,985 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 0, Daily Loss: $0.00
+2025-07-27 10:21:03,135 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 10:21:03,136 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 10:21:03,136 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 10:21:11,629 - INFO - Received signal 15, shutting down gracefully...
+2025-07-27 10:27:59,956 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 10:28:32,068 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 10:35:56,088 - INFO - Cleaning up resources...
+2025-07-27 10:35:56,089 - INFO - Cleanup completed

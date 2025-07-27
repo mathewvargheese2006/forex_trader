@@ -1,0 +1,11 @@
+{
+  "total_trades": 0,
+  "win_rate": 0.0,
+  "total_profit": 0.0,
+  "average_profit": 0.0,
+  "best_strategy": "None",
+  "worst_strategy": "None",
+  "daily_loss": 0.0,
+  "daily_limit": 10000.0,
+  "open_trades": 0
+}
