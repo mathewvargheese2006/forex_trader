@@ -1,6 +1,6 @@
 # AI Forex Trading System
 
-A desktop-based AI-powered forex trading system that runs locally without requiring cloud services or paid subscriptions.
+A desktop-based AI-powered forex trading system that runs locally without requiring cloud services or paid subscriptions. **Now 100% free to use with no cloud costs!**
 
 ## Features
 
@@ -22,8 +22,14 @@ pip install -r requirements.txt
 
 ### 2. Run the System
 
+**Easy way (recommended):**
 ```bash
-python forex_trader2.py
+python3 start_trader.py
+```
+
+**Direct way:**
+```bash
+python3 forex_trader2.py
 ```
 
 The system will create a `config.json` file on first run. You can start using it immediately in demo mode.
