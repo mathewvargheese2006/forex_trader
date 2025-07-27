@@ -6,7 +6,7 @@ A desktop-based AI-powered forex trading system that runs locally without requir
 
 - **Local Storage**: All data stored on your desktop (no cloud costs)
 - **Demo Mode**: Works without MetaTrader 5 setup for testing
-- **AI Analysis**: Uses Claude API for market analysis (optional)
+- **AI Analysis**: Uses Gemini API for market analysis (optional)
 - **Paper Trading**: Safe practice trading with virtual money
 - **Multiple Strategies**: Built-in trading strategies with performance tracking
 - **Real-time Monitoring**: Live market analysis and trade execution
@@ -48,7 +48,7 @@ Edit `config.json` to customize:
   "mt5_server": "your-mt5-server",
   "mt5_login": "your-login",
   "mt5_password": "your-password",
-  "claude_api_key": "your-claude-api-key",
+  "gemini_api_key": "your-gemini-api-key",
   "account_balance": 200000.0,
   "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"],
   "min_win_rate_threshold": 0.6,
@@ -62,9 +62,9 @@ Edit `config.json` to customize:
 - Update the config.json with your MT5 credentials
 - If not configured, system uses demo data
 
-#### Claude API Setup (Optional)
-- Get an API key from Anthropic (anthropic.com)
-- Add it to config.json as "claude_api_key"
+#### Gemini API Setup (Optional)
+- Get an API key from Google AI Studio (makersuite.google.com)
+- Add it to config.json as "gemini_api_key"
 - If not configured, system uses basic mock analysis
 
 ## How to Use
@@ -138,7 +138,7 @@ After running, your folder will contain:
    - Check MT5 credentials in config.json
    - Ensure MT5 is installed and running
 
-3. **Claude API errors**
+3. **Gemini API errors**
    - System will use mock responses automatically
    - Check API key in config.json
    - Verify internet connection
