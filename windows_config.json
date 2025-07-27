@@ -1,0 +1,18 @@
+{
+  "mt5_server": "MetaQuotes-Demo",
+  "mt5_login": "94946431",
+  "mt5_password": "6-OuSpJy",
+  "gemini_api_key": "AIzaSyAYLtic94eXOIrQRaS1ojw626adcvOKNcU",
+  "account_balance": 200000.0,
+  "forex_pairs": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "NZDUSD",
+    "USDCHF"
+  ],
+  "min_win_rate_threshold": 0.6,
+  "max_position_size": 0.02
+}
