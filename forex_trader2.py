@@ -10,7 +10,23 @@ import pandas as pd
 import numpy as np
 # Removed Google Cloud Storage import
 import requests
-import MetaTrader5 as mt5
+try:
+    import MetaTrader5 as mt5
+    MT5_AVAILABLE = True
+except ImportError:
+    MT5_AVAILABLE = False
+    # Create mock mt5 module for compatibility
+    class MockMT5:
+        TIMEFRAME_M15 = "M15"
+        @staticmethod
+        def initialize(): return False
+        @staticmethod
+        def login(*args, **kwargs): return False
+        @staticmethod
+        def copy_rates_from_pos(*args, **kwargs): return None
+        @staticmethod
+        def shutdown(): pass
+    mt5 = MockMT5()
 import sqlite3
 from dataclasses import dataclass, asdict
 import queue
@@ -28,7 +44,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# MetaTrader5 is available
+# Log MT5 availability after logger is configured
+if not MT5_AVAILABLE:
+    logger.warning("MetaTrader5 not available - running in demo mode only")
 
 @dataclass
 class Trade:
@@ -75,8 +93,8 @@ class ForexAITrader:
         self.strategies: Dict[str, Strategy] = {}
         
         # API limits and usage tracking
-        self.claude_requests_today = 0
-        self.claude_daily_limit = 1000  # Conservative limit for Claude API
+        self.gemini_requests_today = 0
+        self.gemini_daily_limit = 1500  # Gemini free tier limit
         self.last_api_reset = datetime.now().date()
         
         # Communication queues
@@ -104,7 +122,7 @@ class ForexAITrader:
                 "mt5_server": "your-mt5-server",
                 "mt5_login": "your-login",
                 "mt5_password": "your-password",
-                "claude_api_key": "your-claude-api-key",
+                "gemini_api_key": "your-gemini-api-key",
                 "account_balance": 200000.0,
                 "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"],
                 "min_win_rate_threshold": 0.6,
@@ -162,6 +180,10 @@ class ForexAITrader:
     def init_mt5(self):
         """Initialize MetaTrader 5 connection"""
         try:
+            if not MT5_AVAILABLE:
+                logger.warning("MetaTrader 5 not available - using demo mode only")
+                return False
+                
             if not mt5.initialize():
                 logger.error("MT5 initialization failed")
                 return False
@@ -238,27 +260,27 @@ class ForexAITrader:
             self.strategies[strategy.name] = strategy
             self.save_strategy(strategy)
 
-    async def call_claude_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
-        """Call Claude API with rate limiting and error handling"""
-        if self.claude_requests_today >= self.claude_daily_limit:
-            logger.warning("Claude API daily limit reached")
+    async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
+        """Call Gemini API with rate limiting and error handling"""
+        if self.gemini_requests_today >= self.gemini_daily_limit:
+            logger.warning("Gemini API daily limit reached")
             return None
         
         # Reset daily counter if new day
         if datetime.now().date() > self.last_api_reset:
-            self.claude_requests_today = 0
+            self.gemini_requests_today = 0
             self.last_api_reset = datetime.now().date()
         
         # Check if API key is configured
-        if self.config.get('claude_api_key') == 'your-claude-api-key':
-            logger.warning("Claude API key not configured - using mock response")
+        if self.config.get('gemini_api_key') == 'your-gemini-api-key':
+            logger.warning("Gemini API key not configured - using mock response")
             return self.generate_mock_response(prompt)
         
         for attempt in range(max_retries):
             try:
                 response = await self.make_api_request(prompt)
                 if response:
-                    self.claude_requests_today += 1
+                    self.gemini_requests_today += 1
                     return response
                     
             except Exception as e:
@@ -277,45 +299,55 @@ class ForexAITrader:
                 "entry_price": 1.0000,
                 "stop_loss": 0.9950,
                 "take_profit": 1.0100,
-                "reasoning": "Mock analysis - API not configured",
+                                 "reasoning": "Mock analysis - Gemini API not configured",
                 "strategy_used": "Demo_Strategy",
                 "risk_reward_ratio": 2.0
             })
-        return "Mock response - Claude API not configured"
+        return "Mock response - Gemini API not configured"
 
     async def make_api_request(self, prompt: str) -> Optional[str]:
-        """Make API request to Claude for analysis"""
+        """Make API request to Gemini for analysis"""
         try:
+            api_key = self.config['gemini_api_key']
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={api_key}"
+            
             headers = {
-                "Content-Type": "application/json",
-                "x-api-key": self.config['claude_api_key'],
-                "anthropic-version": "2023-06-01"
+                "Content-Type": "application/json"
             }
             
             data = {
-                "model": "claude-3-sonnet-20240229",
-                "max_tokens": 1000,
-                "messages": [{"role": "user", "content": prompt}]
+                "contents": [{
+                    "parts": [{
+                        "text": prompt
+                    }]
+                }],
+                "generationConfig": {
+                    "temperature": 0.7,
+                    "maxOutputTokens": 1000,
+                    "topP": 0.8,
+                    "topK": 10
+                }
             }
             
             response = await asyncio.get_event_loop().run_in_executor(
                 None,
-                lambda: requests.post(
-                    "https://api.anthropic.com/v1/messages",
-                    headers=headers,
-                    json=data
-                )
+                lambda: requests.post(url, headers=headers, json=data)
             )
             
             if response.status_code == 200:
-                data = response.json()
-                return data.get('content', [{}])[0].get('text', '')
+                result = response.json()
+                if 'candidates' in result and len(result['candidates']) > 0:
+                    content = result['candidates'][0]['content']['parts'][0]['text']
+                    return content
+                else:
+                    logger.error("No content in Gemini response")
+                    return None
             else:
-                logger.error(f"API request failed: {response.status_code}")
+                logger.error(f"Gemini API request failed: {response.status_code} - {response.text}")
                 return None
                 
         except Exception as e:
-            logger.error(f"API request error: {e}")
+            logger.error(f"Gemini API request error: {e}")
             return None
 
     def get_market_data(self, symbol: str, timeframe=mt5.TIMEFRAME_M15, count: int = 100) -> Optional[pd.DataFrame]:
@@ -453,7 +485,7 @@ class ForexAITrader:
             DO NOT OUTPUT ANYTHING OTHER THAN VALID JSON.
             """
             
-            response = await self.call_claude_api(prompt)
+            response = await self.call_gemini_api(prompt)
             if response:
                 try:
                     # Clean response and parse JSON
@@ -891,7 +923,7 @@ class ForexAITrader:
                 DO NOT OUTPUT ANYTHING OTHER THAN VALID JSON.
                 """
                 
-                response = await self.call_claude_api(prompt)
+                response = await self.call_gemini_api(prompt)
                 if response:
                     try:
                         clean_response = response.replace('```json', '').replace('```', '').strip()
@@ -966,7 +998,7 @@ class ForexAITrader:
                 - Win Rate: {stats.get('win_rate', 0)}%
                 - Total Profit: ${stats.get('total_profit', 0):.2f}
                 - Daily Loss: ${stats.get('daily_loss', 0):.2f} / ${stats.get('daily_limit', 0):.2f}
-                - API Calls Today: {self.claude_requests_today} / {self.claude_daily_limit}
+                - API Calls Today: {self.gemini_requests_today} / {self.gemini_daily_limit}
                 - Account Balance: ${stats.get('account_balance', 0):.2f}
                 """
                 logger.info(status_msg)
@@ -1050,7 +1082,7 @@ class ForexAITrader:
             DO NOT OUTPUT ANYTHING OTHER THAN VALID JSON.
             """
             
-            response = await self.call_claude_api(prompt)
+            response = await self.call_gemini_api(prompt)
             if response:
                 try:
                     clean_response = response.replace('```json', '').replace('```', '').strip()
@@ -1117,7 +1149,7 @@ class ForexAITrader:
             DO NOT OUTPUT ANYTHING OTHER THAN VALID JSON.
             """
             
-            response = await self.call_claude_api(prompt)
+            response = await self.call_gemini_api(prompt)
             if response:
                 try:
                     clean_response = response.replace('```json', '').replace('```', '').strip()
@@ -1165,7 +1197,7 @@ class ForexAITrader:
             Be conversational and insightful.
             """
             
-            response = await self.call_claude_api(prompt)
+            response = await self.call_gemini_api(prompt)
             if response:
                 logger.info(f"AI Response: {response}")
             else:
@@ -1231,7 +1263,7 @@ class ForexAITrader:
                 self.conn.close()
             
             # Shutdown MT5
-            if mt5.initialize():
+            if MT5_AVAILABLE and mt5.initialize():
                 mt5.shutdown()
             
             # Save final state to local storage
@@ -1253,7 +1285,7 @@ if __name__ == "__main__":
             "mt5_server": "your-mt5-server",
             "mt5_login": "your-login", 
             "mt5_password": "your-password",
-            "claude_api_key": "your-claude-api-key",
+            "gemini_api_key": "your-gemini-api-key",
             "account_balance": 200000.0,
             "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "NZDUSD", "USDCHF"],
             "min_win_rate_threshold": 0.6,
@@ -1266,7 +1298,7 @@ if __name__ == "__main__":
         print("🔧 Created config.json. Please update it with your API credentials.")
         print("\nRequired updates:")
         print("1. MT5 server, login, and password")
-        print("2. Claude API key")
+        print("2. Gemini API key")
         print("3. Adjust account_balance if needed")
         sys.exit(1)
     

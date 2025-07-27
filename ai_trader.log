@@ -32,3 +32,86 @@
 2025-07-27 10:28:32,068 - INFO - Received signal 2, shutting down gracefully...
 2025-07-27 10:35:56,088 - INFO - Cleaning up resources...
 2025-07-27 10:35:56,089 - INFO - Cleanup completed
+2025-07-27 12:19:34,830 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 12:19:34,832 - INFO - Local storage directories initialized successfully
+2025-07-27 12:19:34,832 - WARNING - MetaTrader 5 not available - using demo mode only
+2025-07-27 12:19:34,832 - INFO - 🚀 AI Forex Trading System Starting...
+2025-07-27 12:19:34,833 - INFO - Account Balance: $200,000.00
+2025-07-27 12:19:34,833 - INFO - Daily Loss Limit: $10,000.00
+2025-07-27 12:19:34,833 - INFO - Monitoring pairs: EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, NZDUSD, USDCHF
+2025-07-27 12:19:34,833 - INFO - Starting continuous learning loop...
+2025-07-27 12:19:34,833 - INFO - Daily loss counter reset
+2025-07-27 12:19:34,833 - WARNING - Failed to get real rates for EURUSD, using demo data
+2025-07-27 12:19:34,841 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:34,841 - INFO - Analyzing EURUSD: Price 0.99989, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:34,841 - INFO - Chat interface started. Type 'help' for commands.
+2025-07-27 12:19:36,842 - WARNING - Failed to get real rates for GBPUSD, using demo data
+2025-07-27 12:19:36,847 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:36,847 - INFO - Analyzing GBPUSD: Price 1.00021, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:38,848 - WARNING - Failed to get real rates for USDJPY, using demo data
+2025-07-27 12:19:38,853 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:38,853 - INFO - Analyzing USDJPY: Price 1.00061, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:40,854 - WARNING - Failed to get real rates for AUDUSD, using demo data
+2025-07-27 12:19:40,859 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:40,859 - INFO - Analyzing AUDUSD: Price 1.00010, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:42,860 - WARNING - Failed to get real rates for USDCAD, using demo data
+2025-07-27 12:19:42,865 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:42,866 - INFO - Analyzing USDCAD: Price 0.99936, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:44,867 - WARNING - Failed to get real rates for NZDUSD, using demo data
+2025-07-27 12:19:44,872 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:44,872 - INFO - Analyzing NZDUSD: Price 1.00016, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:46,874 - WARNING - Failed to get real rates for USDCHF, using demo data
+2025-07-27 12:19:46,879 - WARNING - Gemini API key not configured - using mock response
+2025-07-27 12:19:46,879 - INFO - Analyzing USDCHF: Price 1.00047, Action: HOLD, Confidence: 0.50
+2025-07-27 12:19:48,881 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 0, Daily Loss: $0.00
+2025-07-27 12:19:54,569 - INFO - Received signal 15, shutting down gracefully...
+2025-07-27 12:34:34,538 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 12:34:41,924 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 12:34:41,926 - INFO - Local storage directories initialized successfully
+2025-07-27 12:34:41,926 - WARNING - MetaTrader 5 not available - using demo mode only
+2025-07-27 12:34:41,926 - INFO - 🚀 AI Forex Trading System Starting...
+2025-07-27 12:34:41,926 - INFO - Account Balance: $200,000.00
+2025-07-27 12:34:41,926 - INFO - Daily Loss Limit: $10,000.00
+2025-07-27 12:34:41,926 - INFO - Monitoring pairs: EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, NZDUSD, USDCHF
+2025-07-27 12:34:48,897 - INFO - Cleaning up resources...
+2025-07-27 12:34:48,898 - INFO - Cleanup completed
+2025-07-27 12:55:35,292 - WARNING - MetaTrader5 not available - running in demo mode only
+2025-07-27 12:55:35,294 - INFO - Local storage directories initialized successfully
+2025-07-27 12:55:35,295 - WARNING - MetaTrader 5 not available - using demo mode only
+2025-07-27 12:55:35,295 - INFO - 🚀 AI Forex Trading System Starting...
+2025-07-27 12:55:35,295 - INFO - Account Balance: $200,000.00
+2025-07-27 12:55:35,295 - INFO - Daily Loss Limit: $10,000.00
+2025-07-27 12:55:35,295 - INFO - Monitoring pairs: EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, NZDUSD, USDCHF
+2025-07-27 12:55:35,295 - INFO - Starting continuous learning loop...
+2025-07-27 12:55:35,295 - INFO - Daily loss counter reset
+2025-07-27 12:55:35,295 - WARNING - Failed to get real rates for EURUSD, using demo data
+2025-07-27 12:55:35,304 - INFO - Chat interface started. Type 'help' for commands.
+2025-07-27 12:55:38,662 - INFO - Analyzing EURUSD: Price 0.99977, Action: HOLD, Confidence: 0.60
+2025-07-27 12:55:40,664 - WARNING - Failed to get real rates for GBPUSD, using demo data
+2025-07-27 12:55:43,848 - INFO - Analyzing GBPUSD: Price 0.99914, Action: BUY, Confidence: 0.60
+2025-07-27 12:55:43,854 - INFO - PAPER TRADE EXECUTED: BUY 83.33 lots of GBPUSD at 0.99914
+2025-07-27 12:55:43,854 - INFO - Reasoning: The GBPUSD is currently trading below its 20 and 50 period moving averages, suggesting a bearish trend. However, the RSI is at 27.13, indicating the pair is oversold.  The recent price action shows a clear downtrend, but the last candle's low is near the lower Bollinger Band, which may signal a potential bounce. The MACD is bearish, but it's close to crossing above the signal line, which could be a bullish sign. The support level is around 0.99927 (Bollinger Lower Band). A buy order is placed near this support level, anticipating a potential bounce or a reversal of the current downward trend. The stop-loss is placed below the recent low to limit potential losses. The take-profit is set above the recent highs and the 20 MA, aiming for a reasonable profit target.
+2025-07-27 12:55:43,856 - ERROR - Error analyzing GBPUSD: Object of type Timestamp is not JSON serializable
+2025-07-27 12:55:43,856 - WARNING - Failed to get real rates for USDJPY, using demo data
+2025-07-27 12:55:46,301 - INFO - Analyzing USDJPY: Price 0.99872, Action: BUY, Confidence: 0.60
+2025-07-27 12:55:46,308 - INFO - PAPER TRADE EXECUTED: BUY 60.61 lots of USDJPY at 0.99872
+2025-07-27 12:55:46,308 - INFO - Reasoning: The price is currently below both the MA20 and MA50, suggesting a bearish trend. However, the RSI is at 32.34, indicating the market is oversold and potentially nearing a bounce. The MACD is negative but nearing a potential bullish crossover. The price is also near the lower Bollinger Band, suggesting potential support. The last five candles show some price consolidation, with the price failing to break below 0.99839 consistently.  Given the oversold conditions and proximity to support, a long position with a tight stop-loss is a reasonable strategy.  The take-profit is set at the upper Bollinger Band, offering a good risk-reward ratio.
+2025-07-27 12:55:46,309 - ERROR - Error analyzing USDJPY: Object of type Timestamp is not JSON serializable
+2025-07-27 12:55:46,309 - WARNING - Failed to get real rates for AUDUSD, using demo data
+2025-07-27 12:55:48,978 - INFO - Analyzing AUDUSD: Price 1.00079, Action: SELL, Confidence: 0.70
+2025-07-27 12:55:48,986 - INFO - PAPER TRADE EXECUTED: SELL 95.24 lots of AUDUSD at 1.00079
+2025-07-27 12:55:48,986 - INFO - Reasoning: The AUDUSD is showing signs of overbought conditions. The RSI is at 76.83, well above the overbought threshold of 70.  The price has recently broken through the Bollinger Bands upper band, suggesting a potential reversal. The last 5 candles show a consistent upward trend, but the momentum might be weakening.  The MACD is bullish but the recent price increase suggests a potential pullback.  Selling at the current price allows us to capitalize on a potential short-term correction. The stop-loss is placed above the recent high to account for potential further upward movement before the reversal. The take-profit is set below the 20-day moving average, aiming for a mean reversion.
+2025-07-27 12:55:48,987 - ERROR - Error analyzing AUDUSD: Object of type Timestamp is not JSON serializable
+2025-07-27 12:55:48,987 - WARNING - Failed to get real rates for USDCAD, using demo data
+2025-07-27 12:55:51,633 - INFO - Analyzing USDCAD: Price 0.99898, Action: HOLD, Confidence: 0.60
+2025-07-27 12:55:53,634 - WARNING - Failed to get real rates for NZDUSD, using demo data
+2025-07-27 12:55:56,335 - INFO - Analyzing NZDUSD: Price 0.99929, Action: HOLD, Confidence: 0.60
+2025-07-27 12:55:57,424 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 12:55:57,424 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 12:55:58,336 - WARNING - Failed to get real rates for USDCHF, using demo data
+2025-07-27 12:56:02,627 - INFO - Analyzing USDCHF: Price 1.00177, Action: SELL, Confidence: 0.80
+2025-07-27 12:56:02,633 - INFO - PAPER TRADE EXECUTED: SELL 68.97 lots of USDCHF at 1.00177
+2025-07-27 12:56:02,633 - INFO - Reasoning: The USDCHF pair is showing strong overbought conditions. The RSI is at 87.23, well above the overbought level of 70.  The price is approaching the upper Bollinger Band (1.00196), suggesting a potential reversal. The recent price action shows a slight upward trend, but the momentum is weakening.  The MACD is bullish (0.00021 > 0.00014), but the RSI's extreme overbought condition outweighs the bullish MACD signal.  A sell order is placed near the current price with a stop-loss above the recent high to account for potential further upward movement before the reversal. The take-profit is set below the 20-period moving average (1.00116) targeting a potential pullback. The risk/reward ratio is approximately 1:2, which is acceptable given the high probability of a short-term reversal.
+2025-07-27 12:56:02,634 - ERROR - Error analyzing USDCHF: Object of type Timestamp is not JSON serializable
+2025-07-27 12:56:02,634 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 4, Daily Loss: $0.00
+2025-07-27 12:56:04,920 - INFO - Received signal 15, shutting down gracefully...

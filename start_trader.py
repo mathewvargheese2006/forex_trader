@@ -34,7 +34,7 @@ def main():
     
     print("\n💡 Optional Setup:")
     print("- Edit config.json to add your MetaTrader 5 credentials")
-    print("- Add Claude API key for AI analysis (optional)")
+    print("- Add Gemini API key for AI analysis (optional)")
     print("- Adjust account_balance and risk settings")
     
     print("\n🔒 Safety Features:")
