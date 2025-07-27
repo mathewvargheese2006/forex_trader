@@ -1,0 +1,18 @@
+{
+  "mt5_server": "your-mt5-server",
+  "mt5_login": "your-login",
+  "mt5_password": "your-password",
+  "claude_api_key": "your-claude-api-key",
+  "account_balance": 200000.0,
+  "forex_pairs": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "NZDUSD",
+    "USDCHF"
+  ],
+  "min_win_rate_threshold": 0.6,
+  "max_position_size": 0.02
+}

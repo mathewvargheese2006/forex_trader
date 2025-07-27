@@ -1,0 +1,60 @@
+{
+  "Moving_Average_Crossover": {
+    "name": "Moving_Average_Crossover",
+    "description": "Buy when fast MA crosses above slow MA, sell when opposite",
+    "parameters": {
+      "fast_period": 20,
+      "slow_period": 50,
+      "risk_reward": 2.0
+    },
+    "win_rate": 0.0,
+    "total_trades": 0,
+    "profitable_trades": 0,
+    "average_profit": 0.0,
+    "last_updated": null,
+    "performance_score": 0.0
+  },
+  "RSI_Momentum": {
+    "name": "RSI_Momentum",
+    "description": "Trade based on RSI overbought/oversold levels",
+    "parameters": {
+      "rsi_period": 14,
+      "oversold": 30,
+      "overbought": 70
+    },
+    "win_rate": 0.0,
+    "total_trades": 0,
+    "profitable_trades": 0,
+    "average_profit": 0.0,
+    "last_updated": null,
+    "performance_score": 0.0
+  },
+  "Breakout_Strategy": {
+    "name": "Breakout_Strategy",
+    "description": "Trade breakouts from consolidation ranges",
+    "parameters": {
+      "lookback_period": 20,
+      "breakout_threshold": 0.001
+    },
+    "win_rate": 0.0,
+    "total_trades": 0,
+    "profitable_trades": 0,
+    "average_profit": 0.0,
+    "last_updated": null,
+    "performance_score": 0.0
+  },
+  "Support_Resistance": {
+    "name": "Support_Resistance",
+    "description": "Trade bounces from key support/resistance levels",
+    "parameters": {
+      "sr_strength": 3,
+      "bounce_confirmation": 2
+    },
+    "win_rate": 0.0,
+    "total_trades": 0,
+    "profitable_trades": 0,
+    "average_profit": 0.0,
+    "last_updated": null,
+    "performance_score": 0.0
+  }
+}
