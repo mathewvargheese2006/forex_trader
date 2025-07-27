@@ -10,11 +10,7 @@ import pandas as pd
 import numpy as np
 # Removed Google Cloud Storage import
 import requests
-try:
-    import MetaTrader5 as mt5
-    MT5_AVAILABLE = True
-except ImportError:
-    MT5_AVAILABLE = False
+import MetaTrader5 as mt5
 import sqlite3
 from dataclasses import dataclass, asdict
 import queue
@@ -32,9 +28,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Log MT5 availability after logger is configured
-if not MT5_AVAILABLE:
-    logger.warning("MetaTrader5 not available - running in demo mode only")
+# MetaTrader5 is available
 
 @dataclass
 class Trade:
@@ -168,10 +162,6 @@ class ForexAITrader:
     def init_mt5(self):
         """Initialize MetaTrader 5 connection"""
         try:
-            if not MT5_AVAILABLE:
-                logger.warning("MetaTrader 5 not available - using demo mode only")
-                return False
-                
             if not mt5.initialize():
                 logger.error("MT5 initialization failed")
                 return False
@@ -186,10 +176,10 @@ class ForexAITrader:
                     password=self.config['mt5_password'],
                     server=self.config['mt5_server']
                 ):
-                    logger.error("MT5 login failed")
+                    logger.error("MT5 login failed - using demo data")
                     return False
                 
-                logger.info("MetaTrader 5 initialized successfully")
+                logger.info("MetaTrader 5 initialized and logged in successfully")
             else:
                 logger.warning("MT5 credentials not configured - using demo mode")
             return True
@@ -328,21 +318,18 @@ class ForexAITrader:
             logger.error(f"API request error: {e}")
             return None
 
-    def get_market_data(self, symbol: str, timeframe=None, count: int = 100) -> Optional[pd.DataFrame]:
+    def get_market_data(self, symbol: str, timeframe=mt5.TIMEFRAME_M15, count: int = 100) -> Optional[pd.DataFrame]:
         """Get market data from MT5 or generate demo data"""
         try:
-            # Try to get real data from MT5 if available
-            if MT5_AVAILABLE and hasattr(mt5, 'TIMEFRAME_M15'):
-                if timeframe is None:
-                    timeframe = mt5.TIMEFRAME_M15
-                rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, count)
-                if rates is not None:
-                    df = pd.DataFrame(rates)
-                    df['time'] = pd.to_datetime(df['time'], unit='s')
-                    return df
-            
-            # Fall back to demo data
-            return self.generate_demo_data(symbol, count)
+            # Try to get real data from MT5
+            rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, count)
+            if rates is not None:
+                df = pd.DataFrame(rates)
+                df['time'] = pd.to_datetime(df['time'], unit='s')
+                return df
+            else:
+                logger.warning(f"Failed to get real rates for {symbol}, using demo data")
+                return self.generate_demo_data(symbol, count)
             
         except Exception as e:
             logger.warning(f"Error getting market data for {symbol}: {e}, using demo data")
@@ -1244,7 +1231,7 @@ class ForexAITrader:
                 self.conn.close()
             
             # Shutdown MT5
-            if MT5_AVAILABLE and mt5.initialize():
+            if mt5.initialize():
                 mt5.shutdown()
             
             # Save final state to local storage
