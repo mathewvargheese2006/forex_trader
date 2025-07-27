@@ -261,8 +261,8 @@ class ForexAITrader:
             self.strategies[strategy.name] = strategy
             self.save_strategy(strategy)
 
-    def get_current_api_key(self):
-        """Get the current API key, switching if limit reached"""
+    def get_next_available_api_key(self):
+        """Get the next available API key in rotation, excluding those at limit"""
         api_keys = self.config.get('gemini_api_keys', [])
         if not api_keys or api_keys == ['your-gemini-api-key']:
             return None
@@ -273,29 +273,45 @@ class ForexAITrader:
             self.last_api_reset = datetime.now().date()
             self.current_api_key_index = 0
         
-        # Check if current key has reached limit
-        current_key = api_keys[self.current_api_key_index]
-        current_usage = self.gemini_requests_today.get(current_key, 0)
+        # Find available keys (not at limit)
+        available_keys = []
+        for i, key in enumerate(api_keys):
+            usage = self.gemini_requests_today.get(key, 0)
+            if usage < self.gemini_daily_limit:
+                available_keys.append((i, key))
         
-        if current_usage >= self.gemini_daily_limit:
-            # Switch to next API key
-            self.current_api_key_index = (self.current_api_key_index + 1) % len(api_keys)
-            next_key = api_keys[self.current_api_key_index]
-            next_usage = self.gemini_requests_today.get(next_key, 0)
-            
-            if next_usage >= self.gemini_daily_limit:
-                # All keys have reached limit
-                logger.warning("All Gemini API keys have reached daily limit")
-                return None
-            
-            logger.info(f"Switched to backup API key #{self.current_api_key_index + 1} (Key ending in ...{next_key[-4:]})")
-            return next_key
+        if not available_keys:
+            logger.warning("All Gemini API keys have reached daily limit")
+            # Log status of all keys
+            for i, key in enumerate(api_keys):
+                usage = self.gemini_requests_today.get(key, 0)
+                logger.info(f"  API Key #{i+1} (...{key[-4:]}): {usage}/{self.gemini_daily_limit} requests")
+            return None
         
-        return current_key
+        # Always rotate to next available key in sequence
+        # Find current position among available keys
+        current_position = 0
+        for i, (key_index, key) in enumerate(available_keys):
+            if key_index == self.current_api_key_index:
+                current_position = i
+                break
+        
+        # Move to next available key (round-robin)
+        next_position = (current_position + 1) % len(available_keys)
+        next_available = available_keys[next_position]
+        
+        old_index = self.current_api_key_index
+        self.current_api_key_index = next_available[0]
+        
+        # Log key rotation
+        if len(available_keys) > 1:  # Only log if there are multiple keys
+            logger.info(f"Rotating to API Key #{self.current_api_key_index + 1} (...{next_available[1][-4:]}) - Available: {len(available_keys)}/{len(api_keys)} keys")
+        
+        return next_available[1]
 
     async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
-        """Call Gemini API with multiple key support and rate limiting"""
-        api_key = self.get_current_api_key()
+        """Call Gemini API with alternating key rotation and automatic exclusion"""
+        api_key = self.get_next_available_api_key()
         
         if not api_key:
             logger.warning("No Gemini API keys available or all limits reached - using mock response")
@@ -1032,13 +1048,22 @@ class ForexAITrader:
                 - Win Rate: {stats.get('win_rate', 0)}%
                 - Total Profit: ${stats.get('total_profit', 0):.2f}
                 - Daily Loss: ${stats.get('daily_loss', 0):.2f} / ${stats.get('daily_limit', 0):.2f}
-                - API Calls Today: {sum(self.gemini_requests_today.values())} total
-                - API Key 1: {self.gemini_requests_today.get(self.config.get('gemini_api_keys', [''])[0] if len(self.config.get('gemini_api_keys', [])) > 0 else '', 0)} / {self.gemini_daily_limit}
-                - API Key 2: {self.gemini_requests_today.get(self.config.get('gemini_api_keys', ['', ''])[1] if len(self.config.get('gemini_api_keys', [])) > 1 else '', 0)} / {self.gemini_daily_limit}
-                - API Key 3: {self.gemini_requests_today.get(self.config.get('gemini_api_keys', ['', '', ''])[2] if len(self.config.get('gemini_api_keys', [])) > 2 else '', 0)} / {self.gemini_daily_limit}
-                - Current Active: API Key #{self.current_api_key_index + 1} (...{self.config.get('gemini_api_keys', [''])[self.current_api_key_index][-4:] if len(self.config.get('gemini_api_keys', [])) > self.current_api_key_index else 'None'})
-                - Account Balance: ${stats.get('account_balance', 0):.2f}
-                """
+                - API Calls Today: {sum(self.gemini_requests_today.values())} total"""
+                
+                # Show status for each API key
+                api_keys = self.config.get('gemini_api_keys', [])
+                available_count = 0
+                for i, key in enumerate(api_keys):
+                    usage = self.gemini_requests_today.get(key, 0)
+                    status = "ACTIVE" if i == self.current_api_key_index else "READY"
+                    if usage >= self.gemini_daily_limit:
+                        status = "EXCLUDED"
+                    else:
+                        available_count += 1
+                    status_msg += f"\n                - API Key #{i+1} (...{key[-4:]}): {usage}/{self.gemini_daily_limit} [{status}]"
+                
+                status_msg += f"\n                - Available Keys: {available_count}/{len(api_keys)}"
+                status_msg += f"\n                - Account Balance: ${stats.get('account_balance', 0):.2f}"
                 logger.info(status_msg)
                 
             elif command == 'stats':
