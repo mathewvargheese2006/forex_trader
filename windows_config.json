@@ -2,7 +2,10 @@
   "mt5_server": "MetaQuotes-Demo",
   "mt5_login": "94946431",
   "mt5_password": "6-OuSpJy",
-  "gemini_api_key": "AIzaSyAYLtic94eXOIrQRaS1ojw626adcvOKNcU",
+  "gemini_api_keys": [
+    "AIzaSyAYLtic94eXOIrQRaS1ojw626adcvOKNcU",
+    "AIzaSyA4nhBB1muLZXw-mf3_H_B4q4XmLKZwJRI"
+  ],
   "account_balance": 200000.0,
   "forex_pairs": [
     "EURUSD",

@@ -93,9 +93,10 @@ class ForexAITrader:
         self.strategies: Dict[str, Strategy] = {}
         
         # API limits and usage tracking
-        self.gemini_requests_today = 0
-        self.gemini_daily_limit = 1500  # Gemini free tier limit
+        self.gemini_requests_today = {}  # Track requests per API key
+        self.gemini_daily_limit = 1500  # Gemini free tier limit per key
         self.last_api_reset = datetime.now().date()
+        self.current_api_key_index = 0  # Track which API key we're using
         
         # Communication queues
         self.chat_queue = queue.Queue()
@@ -122,7 +123,7 @@ class ForexAITrader:
                 "mt5_server": "your-mt5-server",
                 "mt5_login": "your-login",
                 "mt5_password": "your-password",
-                "gemini_api_key": "your-gemini-api-key",
+                "gemini_api_keys": ["your-gemini-api-key"],
                 "account_balance": 200000.0,
                 "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"],
                 "min_win_rate_threshold": 0.6,
@@ -260,27 +261,54 @@ class ForexAITrader:
             self.strategies[strategy.name] = strategy
             self.save_strategy(strategy)
 
-    async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
-        """Call Gemini API with rate limiting and error handling"""
-        if self.gemini_requests_today >= self.gemini_daily_limit:
-            logger.warning("Gemini API daily limit reached")
+    def get_current_api_key(self):
+        """Get the current API key, switching if limit reached"""
+        api_keys = self.config.get('gemini_api_keys', [])
+        if not api_keys or api_keys == ['your-gemini-api-key']:
             return None
         
-        # Reset daily counter if new day
+        # Reset daily counters if new day
         if datetime.now().date() > self.last_api_reset:
-            self.gemini_requests_today = 0
+            self.gemini_requests_today = {}
             self.last_api_reset = datetime.now().date()
+            self.current_api_key_index = 0
         
-        # Check if API key is configured
-        if self.config.get('gemini_api_key') == 'your-gemini-api-key':
-            logger.warning("Gemini API key not configured - using mock response")
+        # Check if current key has reached limit
+        current_key = api_keys[self.current_api_key_index]
+        current_usage = self.gemini_requests_today.get(current_key, 0)
+        
+        if current_usage >= self.gemini_daily_limit:
+            # Switch to next API key
+            self.current_api_key_index = (self.current_api_key_index + 1) % len(api_keys)
+            next_key = api_keys[self.current_api_key_index]
+            next_usage = self.gemini_requests_today.get(next_key, 0)
+            
+            if next_usage >= self.gemini_daily_limit:
+                # All keys have reached limit
+                logger.warning("All Gemini API keys have reached daily limit")
+                return None
+            
+            logger.info(f"Switched to backup API key #{self.current_api_key_index + 1}")
+            return next_key
+        
+        return current_key
+
+    async def call_gemini_api(self, prompt: str, max_retries: int = 3) -> Optional[str]:
+        """Call Gemini API with multiple key support and rate limiting"""
+        api_key = self.get_current_api_key()
+        
+        if not api_key:
+            logger.warning("No Gemini API keys available or all limits reached - using mock response")
             return self.generate_mock_response(prompt)
         
         for attempt in range(max_retries):
             try:
-                response = await self.make_api_request(prompt)
+                response = await self.make_api_request(prompt, api_key)
                 if response:
-                    self.gemini_requests_today += 1
+                    # Track usage for this specific key
+                    if api_key not in self.gemini_requests_today:
+                        self.gemini_requests_today[api_key] = 0
+                    self.gemini_requests_today[api_key] += 1
                     return response
                     
             except Exception as e:
@@ -305,10 +333,9 @@ class ForexAITrader:
             })
         return "Mock response - Gemini API not configured"
 
-    async def make_api_request(self, prompt: str) -> Optional[str]:
+    async def make_api_request(self, prompt: str, api_key: str) -> Optional[str]:
         """Make API request to Gemini for analysis"""
         try:
-            api_key = self.config['gemini_api_key']
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={api_key}"
             
             headers = {
@@ -998,7 +1025,10 @@ class ForexAITrader:
                 - Win Rate: {stats.get('win_rate', 0)}%
                 - Total Profit: ${stats.get('total_profit', 0):.2f}
                 - Daily Loss: ${stats.get('daily_loss', 0):.2f} / ${stats.get('daily_limit', 0):.2f}
-                - API Calls Today: {self.gemini_requests_today} / {self.gemini_daily_limit}
+                - API Calls Today: {sum(self.gemini_requests_today.values())} total
+                - API Key 1: {self.gemini_requests_today.get(self.config.get('gemini_api_keys', [''])[0], 0)} / {self.gemini_daily_limit}
+                - API Key 2: {self.gemini_requests_today.get(self.config.get('gemini_api_keys', ['', ''])[1] if len(self.config.get('gemini_api_keys', [])) > 1 else '', 0)} / {self.gemini_daily_limit}
+                - Current Active: API Key #{self.current_api_key_index + 1}
                 - Account Balance: ${stats.get('account_balance', 0):.2f}
                 """
                 logger.info(status_msg)
@@ -1285,7 +1315,7 @@ if __name__ == "__main__":
             "mt5_server": "your-mt5-server",
             "mt5_login": "your-login", 
             "mt5_password": "your-password",
-            "gemini_api_key": "your-gemini-api-key",
+            "gemini_api_keys": ["your-gemini-api-key"],
             "account_balance": 200000.0,
             "forex_pairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "NZDUSD", "USDCHF"],
             "min_win_rate_threshold": 0.6,
