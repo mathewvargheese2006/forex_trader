@@ -106,3 +106,12 @@
 2025-07-27 12:55:51,633 - INFO - Analyzing USDCAD: Price 0.99898, Action: HOLD, Confidence: 0.60
 2025-07-27 12:55:53,634 - WARNING - Failed to get real rates for NZDUSD, using demo data
 2025-07-27 12:55:56,335 - INFO - Analyzing NZDUSD: Price 0.99929, Action: HOLD, Confidence: 0.60
+2025-07-27 12:55:57,424 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 12:55:57,424 - INFO - Received signal 2, shutting down gracefully...
+2025-07-27 12:55:58,336 - WARNING - Failed to get real rates for USDCHF, using demo data
+2025-07-27 12:56:02,627 - INFO - Analyzing USDCHF: Price 1.00177, Action: SELL, Confidence: 0.80
+2025-07-27 12:56:02,633 - INFO - PAPER TRADE EXECUTED: SELL 68.97 lots of USDCHF at 1.00177
+2025-07-27 12:56:02,633 - INFO - Reasoning: The USDCHF pair is showing strong overbought conditions. The RSI is at 87.23, well above the overbought level of 70.  The price is approaching the upper Bollinger Band (1.00196), suggesting a potential reversal. The recent price action shows a slight upward trend, but the momentum is weakening.  The MACD is bullish (0.00021 > 0.00014), but the RSI's extreme overbought condition outweighs the bullish MACD signal.  A sell order is placed near the current price with a stop-loss above the recent high to account for potential further upward movement before the reversal. The take-profit is set below the 20-period moving average (1.00116) targeting a potential pullback. The risk/reward ratio is approximately 1:2, which is acceptable given the high probability of a short-term reversal.
+2025-07-27 12:56:02,634 - ERROR - Error analyzing USDCHF: Object of type Timestamp is not JSON serializable
+2025-07-27 12:56:02,634 - INFO - Status - Win Rate: 0.0%, Total Profit: $0.00, Open Trades: 4, Daily Loss: $0.00
+2025-07-27 12:56:04,920 - INFO - Received signal 15, shutting down gracefully...
